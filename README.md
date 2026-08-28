@@ -1,5 +1,10 @@
 # Climate-Health Research Data Ingestion Engine
 ### Apache Airflow | PySpark | REST Web APIs | Pandas | SQL Server | Docker
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/YOUR-USERNAME/climate-health-data-pipeline)
+[![Airflow](https://img.shields.io/badge/Apache%20Airflow-2.x-orange.svg)](https://airflow.apache.org/)
+[![PySpark](https://img.shields.io/badge/PySpark-Enabled-yellow.svg)](https://spark.apache.org/docs/latest/api/python/)
+[![Python](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 An enterprise-grade, fault-tolerant ETL pipeline built to orchestrate, clean, validate, and load high-throughput climate-health telemetry data. The engine seamlessly processes both live REST Web API payloads and batch-processed field sensor logsheets (`.csv`, `.xlsx`), implementing automated row-level quarantine and pre-database deduplication to protect relational data integrity.
 
