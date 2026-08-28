@@ -3,59 +3,12 @@
 
 An enterprise-grade, fault-tolerant ETL pipeline built to orchestrate, clean, validate, and load high-throughput climate-health telemetry data. The engine seamlessly processes both live REST Web API payloads and batch-processed field sensor logsheets (`.csv`, `.xlsx`), implementing automated row-level quarantine and pre-database deduplication to protect relational data integrity.
 
----
-
-## 🏗️ System Architecture
-
-```text
-                       +-----------------------------------+
-                       |   Multi-Source Ingestion Layer    |
-                       +-----------------------------------+
-                                   |           |
-              +--------------------+           +--------------------+
-              |                                                     |
-  [ REST Web API Endpoints ]                           [ File System / Storage Mounts ]
-  • OAuth2 / Bearer Auth                               • Sensor Logsheets (.csv, .xlsx)
-  • Rate-Limited Pagination                            • Batch Drop Directory
-              |                                                     |
-              +--------------------+           +--------------------+
-                                   |           |
-                                   v           v
-                       +-----------------------------------+
-                       |      Apache Airflow DAG Engine    |
-                       |     (climate_health_etl_dag)      |
-                       +-----------------------------------+
-                                       |
-                                       v
-                       +-----------------------------------+
-                       |   PySpark / Pandas Data Cleaning   |
-                       |  & Schema Standardization Module  |
-                       +-----------------------------------+
-                                       |
-                                       v
-                       +-----------------------------------+
-                       |    Two-Tier Data Integrity Gate   |
-                       +-----------------------------------+
-                         /                               \
-       [ Clean & Validated Records ]               [ Non-Conforming Records ]
-                     |                                       |
-                     v                                       v
-        +-------------------------+             +-------------------------+
-        |  SQL Server Pre-Filter  |             | Row-Level Quarantine    |
-        |  & Bulk Ingestion       |             | Output (.json & .csv)   |
-        +-------------------------+             +-------------------------+
-                     |
-                     v
-        +-------------------------+
-        |  dbo.etl_execution_logs |
-        |   (Audit Trail Table)   |
-        +-------------------------+
 
 ## 📊 Pipeline Orchestration & DAG Workflows
 
 ### 1. Ingestion Engine Overview
 <p align="center">
-  <img src="docs/images/airflow_data_ingestion_DAGS.jpg" alt="Airflow Data Ingestion DAGs Overview" width="100%">
+  <img src="dags/docs/images/airflow_data_ingestion_DAGS.jpg" alt="Airflow Data Ingestion DAGs Overview" width="100%">
   <br>
   <sub><b>Figure 1:</b> Apache Airflow dashboard displaying active multi-source ETL DAG schedules and execution metrics.</sub>
 </p>
@@ -64,7 +17,7 @@ An enterprise-grade, fault-tolerant ETL pipeline built to orchestrate, clean, va
 
 ### 2. Sensor Logsheet Processing Workflow (`TempU-03 / SHAPES`)
 <p align="center">
-  <img src="docs/images/airflow_climate_data_DAG_Tempu03.jpg" alt="Climate Logsheet ETL DAG Execution" width="100%">
+  <img src="dags/docs/images/airflow_climate_data_DAG_Tempu03.jpg" alt="Climate Logsheet ETL DAG Execution" width="100%">
   <br>
   <sub><b>Figure 2:</b> Task graph executing CSV logsheet parsing, timeline overlap auditing, SQL Server deduplication, and row-level quarantine exports.</sub>
 </p>
@@ -73,7 +26,7 @@ An enterprise-grade, fault-tolerant ETL pipeline built to orchestrate, clean, va
 
 ### 3. REST Web API Telemetry Ingestion (`Fitbit API`)
 <p align="center">
-  <img src="docs/images/airflow_fitbit_api_data_DAG.jpg" alt="Fitbit REST API Data Ingestion DAG" width="100%">
+  <img src="dags/docs/images/airflow_fitbit_api_data_DAG.jpg" alt="Fitbit REST API Data Ingestion DAG" width="100%">
   <br>
   <sub><b>Figure 3:</b> Automated API fetch DAG managing bearer token authentication, rate-limited pagination, and direct SQL target ingestion.</sub>
 </p>
