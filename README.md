@@ -50,3 +50,30 @@ An enterprise-grade, fault-tolerant ETL pipeline built to orchestrate, clean, va
         |  dbo.etl_execution_logs |
         |   (Audit Trail Table)   |
         +-------------------------+
+
+## 📊 Pipeline Orchestration & DAG Workflows
+
+### 1. Ingestion Engine Overview
+<p align="center">
+  <img src="docs/images/airflow_data_ingestion_DAGS.jpg" alt="Airflow Data Ingestion DAGs Overview" width="100%">
+  <br>
+  <sub><b>Figure 1:</b> Apache Airflow dashboard displaying active multi-source ETL DAG schedules and execution metrics.</sub>
+</p>
+
+---
+
+### 2. Sensor Logsheet Processing Workflow (`TempU-03 / SHAPES`)
+<p align="center">
+  <img src="docs/images/airflow_climate_data_DAG_Tempu03.jpg" alt="Climate Logsheet ETL DAG Execution" width="100%">
+  <br>
+  <sub><b>Figure 2:</b> Task graph executing CSV logsheet parsing, timeline overlap auditing, SQL Server deduplication, and row-level quarantine exports.</sub>
+</p>
+
+---
+
+### 3. REST Web API Telemetry Ingestion (`Fitbit API`)
+<p align="center">
+  <img src="docs/images/airflow_fitbit_api_data_DAG.jpg" alt="Fitbit REST API Data Ingestion DAG" width="100%">
+  <br>
+  <sub><b>Figure 3:</b> Automated API fetch DAG managing bearer token authentication, rate-limited pagination, and direct SQL target ingestion.</sub>
+</p>
